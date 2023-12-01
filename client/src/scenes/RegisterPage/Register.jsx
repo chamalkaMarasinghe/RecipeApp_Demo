@@ -133,7 +133,8 @@ function Register(props) {
                                 })
                                 .then(function(response) {return response.json()})
                                 .then(data => {
-                                    dispatch(setUser(data.newUser));
+                                    //dispatch(setUser(data.newUser));
+                                    dispatch(setUser({"user" : data.newUser, "token" : data.token}));
                                     //pass the data throug pages with the help of useNAvigate()
                                     // navigate('/', { state: { user: data.newUser } });
                                     navigate('/');

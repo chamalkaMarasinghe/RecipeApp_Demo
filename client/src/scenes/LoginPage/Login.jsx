@@ -23,7 +23,8 @@ function Login(props) {
                 .then(data => {
                     document.getElementById('loggin-err').innerHTML = data.status;
                     if(data.status == 'Signed-in Successfully'){
-                        dispatch(setUser(data.user));
+                        // dispatch(setUser(data.user));
+                        dispatch(setUser({"user" : data.user, "token" : data.token}));
                         navigate('/');
                     }
                 });

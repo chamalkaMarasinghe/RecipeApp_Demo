@@ -1,10 +1,13 @@
 const UserSchema = require('../models/user');
+const jwt = require('jsonwebtoken')
 
 const registerUser = async(req, res) => {
     try {
         const { firstname, lastname, email, phone, password} = req.body;
         const newUser = await UserSchema.create({ firstname, lastname, email, phone, password});
-        res.status(200).json({ "newUser" : newUser});
+        const id = newUser._id;
+        const token = jwt.sign({id}, process.env.TOKEN_KEY);
+        res.status(200).json({ "newUser" : newUser, "token" : token});
         
     } catch (error) {
         res.status(500).json({"msg" : error.message});
@@ -17,7 +20,10 @@ const login = async(req, res) => {
         const user = await UserSchema.findOne({email : email});
         if(user){
             if(user.password.localeCompare(password) == 0){
-                res.status(202).json({ "status" : "Signed-in Successfully", "user" : user });
+
+                const id = user._id;
+                const token = jwt.sign({id}, process.env.TOKEN_KEY);
+                res.status(202).json({ "status" : "Signed-in Successfully", "user" : user, "token" : token });
             }
             else{
                 res.status(401).json({ "status" : "invalid Password"});

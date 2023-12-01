@@ -18,15 +18,12 @@ function FavorituesPage(props) {
 
     const loadFavMeals = async () => {
         try {
-            console.log(user.favs);
             const localFavMeals = await Promise.all(
                 user.favs.map(async (mealId) => {
                     const data = await getMealById(mealId);
                     return data.meals[0];
                 })
             );
-            console.log(localFavMeals);
-            console.log(localFavMeals.length);
             //Update the local state with the fetched favMeals
             setFavMeals(localFavMeals);
         } catch (error) {

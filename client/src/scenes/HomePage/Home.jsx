@@ -35,7 +35,6 @@ function Home(props) {
 
     useEffect(() => {
         loadCategories().then((res) => {setCategories(res.categories); getMealsByCategory(res.categories[0].strCategory)})
-        console.log(user);
     }, [])
 
     const numberOfVerticalRows = Math.ceil(meals.length / 5);

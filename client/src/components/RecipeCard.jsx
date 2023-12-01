@@ -6,7 +6,8 @@ import { addRemoveRecipe } from '../redux/action';
 
 function RecipeCard(props) {
 
-    const { user } = useSelector(state => state.userReducer);
+    const { user, token } = useSelector(state => state.userReducer);
+    // const { token } = useSelector(state => state.token)};
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -27,7 +28,7 @@ function RecipeCard(props) {
 
             await fetch(`http://localhost:3001/auth/user/${user._id}/recipe/${recipeId}`, {
                 method : "PATCH",
-                headers : {"Content-Type" : "Application/json"}
+                headers : {"Content-Type" : "Application/json", "Authorization" : token}
             });
         } catch (error) {
             console.log(error.message);
